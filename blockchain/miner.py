@@ -24,11 +24,11 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
     last_hash = hashlib.sha256(f"{last_proof}".encode())
-    proof = random.randint(1,20000000)
+    proof = random.randint(1,9999999999999)
     print(proof)
     #  TODO: Your code here
     while valid_proof(last_hash, proof) is False:
-        proof=random.randint(1,20000000)
+        proof=random.randint(1,9999999999999)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
