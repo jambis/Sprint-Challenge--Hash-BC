@@ -27,8 +27,14 @@ def proof_of_work(last_proof):
     proof = random.randint(1,sys.maxsize)
     print(proof)
     #  TODO: Your code here
+    count = 0
     while valid_proof(last_hash, proof) is False:
-        proof=random.randint(1,sys.maxsize)
+        count += 1
+        if count == 1000000:
+            print("Reached 1,000,000 attempts in: " + str(timer() - start))
+            return
+        else:
+            proof=random.randint(1,sys.maxsize)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
