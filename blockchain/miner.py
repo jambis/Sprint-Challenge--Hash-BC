@@ -24,11 +24,11 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
     last_hash = hashlib.sha256(f"{last_proof}".encode())
-    proof = random.randint(1,9999999999999)
+    proof = random.randint(1,sys.maxsize)
     print(proof)
     #  TODO: Your code here
     while valid_proof(last_hash, proof) is False:
-        proof=random.randint(1,9999999999999)
+        proof=random.randint(1,sys.maxsize)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -45,14 +45,12 @@ def valid_proof(last_hash, proof):
     
     # TODO: Your code here!
     prev_hash = last_hash.hexdigest()
-    new_guess = f"{last_hash}{proof}".encode()
+    new_guess = f"{proof}".encode()
     new_hash = hashlib.sha256(new_guess).hexdigest()
 
-    # print(prev_hash)
-    # print(prev_hash[-6:])
-    # print(new_hash)
-    # print(new_hash[:6])
     if prev_hash[-6:] == new_hash[:6]:
+        print(prev_hash[-6:])
+        print(new_hash[:6])
         return True
     else:
         return False
