@@ -23,8 +23,18 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    last_hash = hashlib.sha256(f"{last_proof}".encode())
+    proof = random.randint(1,sys.maxsize)
+    print(proof)
     #  TODO: Your code here
+    count = 0
+    while valid_proof(last_hash, proof) is False:
+        count += 1
+        if count == 1000000:
+            print("Reached 1,000,000 attempts in: " + str(timer() - start))
+            return
+        else:
+            proof=random.randint(1,sys.maxsize)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -38,9 +48,18 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-
+    
     # TODO: Your code here!
-    pass
+    prev_hash = last_hash.hexdigest()
+    new_guess = f"{proof}".encode()
+    new_hash = hashlib.sha256(new_guess).hexdigest()
+
+    if prev_hash[-6:] == new_hash[:6]:
+        print(prev_hash[-6:])
+        print(new_hash[:6])
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
